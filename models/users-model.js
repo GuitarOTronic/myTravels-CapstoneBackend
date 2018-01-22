@@ -10,6 +10,13 @@ class UsersModel {
     return db('users')
   }
 
+  static getOneUserByEmail(email){
+    return db('users')
+      .where({email})
+      .first()
+
+  }
+
 }
 
 

@@ -21,11 +21,12 @@ app.use((req, res) => {
   const message = `Could not find that`
   res.status(status).json({status, message})
 })
+
 app.use((error, req, res, next) => {
-  console.log(error);
+  console.log('In internal error', error.message);
   const message = error.message || 'Internal error'
   const status = error.status || 500
-  res.status(status).json({status, message})
+  res.status(status).json({message})
 })
 
 app.listen(port, () => {
