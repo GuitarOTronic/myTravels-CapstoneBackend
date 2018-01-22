@@ -17,6 +17,14 @@ class UsersModel {
 
   }
 
+  static createUser(name, email, password){
+
+    return db('users')
+      .insert({name, email, password})
+      .returning('*')
+      .then(([response]) => response)
+  }
+
 }
 
 

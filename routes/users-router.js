@@ -3,7 +3,16 @@ const Controller = require('../controllers/users-controller.js')
 console.log('user router');
 
 router.get('/', Controller.getAllUsers)
-router.post('/login', Controller.verifyToken, Controller.verifyLogin, Controller.resToken)
-router.post('/signup', Controller.verifyToken, Controller.checkAvailabilty )
+router.post('/login',
+      Controller.verifyToken,
+      Controller.verifyLogin,
+      Controller.resToken
+    )
+router.post('/signup',
+      Controller.verifyToken,
+      Controller.checkAvailabilty,
+      Controller.createUserHash,
+      Controller.createUser,
+      Controller.resToken)
 
 module.exports = router;
