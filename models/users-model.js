@@ -6,6 +6,21 @@ const jwt = require('jsonwebtoken')
 
 class UsersModel {
 
+  static createUser(name, email, password){
+    return db('users')
+      .insert({name, email, password})
+      .returning('*')
+      .then(([response]) => response)
+  }
+
+
+  static deleteUser(id){
+    return db('users')
+      .where({id})
+      .del()
+      .returning('id')
+  }
+
   static getAllUsers(){
     return db('users')
   }
@@ -15,14 +30,6 @@ class UsersModel {
       .where({email})
       .first()
 
-  }
-
-  static createUser(name, email, password){
-
-    return db('users')
-      .insert({name, email, password})
-      .returning('*')
-      .then(([response]) => response)
   }
 
 }

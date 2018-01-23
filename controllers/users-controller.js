@@ -37,14 +37,31 @@ class UserController {
     })
   }
 
+  static deleteUser(req, res, next) {
+    const id = req.params.id
+    Model.deleteUser(id).then(response => {
+      console.log('deleted? => ', response);
+      res.status(200).json({response})
+    })
+  }
+
+  static logout(req, res, next){
+    const id = req.body.id
+    Model.logout(id).then(response => {
+      console.log('Logout response ', response);
+      res.status(200).json({response})
+    })
+  }
+
   static resToken(req, res, next) {
         let payload = {
             id: req.body.id,
             email:req.body.email,
             name:req.body.name
         }
+        console.log(payload);
         let token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '2 years' })
-        return res.json(token)
+        return res.json({payload, token})
     }
 
   static verifyLogin (req, res, next) {
@@ -53,7 +70,7 @@ class UserController {
       req.body.email=email
       Model.getOneUserByEmail(email).then(user => {
           if (!user) {
-              return next({status: 404, message: `Email: ${email} not found.`})
+            return next({status: 404, message: `Email: ${email} not found.`})
           }
           req.body = user
           return bcrypt.compare(password, req.body.password)
@@ -63,15 +80,23 @@ class UserController {
       }).then(() => next())
   }
 
+
   static verifyToken(req, res, next){
     let [bearer, token] = req.headers.auth ? req.headers.auth.split(' ') : [null, null]
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, verifiedToken) => {
+    if(token.length > 10){
+      var decodedOld = jwt.verify(token, process.env.TOKEN_SECRET);
+    }
+    var decoded = jwt.verify(token, process.env.TOKEN_SECRET, (err, verifiedToken) => {
       if(err){
-        // console.log('been an err: ', err);
+        console.log('jwt error: ', err);
         req.token = null
+      }
+      else if(decodedOld){
+        req.body = decodedOld
       }
       else {
         req.token = token
+        req.body.decoded = decoded
       }
     })
     next()
