@@ -6,14 +6,16 @@ const port = process.env.PORT || 2999
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const path = require('path')
-
+var cloudinary = require('cloudinary');
 
 const userRouter = require('./routes/users-router.js')
+const tripsRouter = require('./routes/trips-router.js')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 app.use('/users', userRouter)
+app.use('/trips', tripsRouter)
 
 
 app.use((req, res) => {

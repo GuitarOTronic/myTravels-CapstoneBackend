@@ -1,5 +1,4 @@
 const db = require('../db/connections.js')
-console.log('model here');
 const bcrypt = require('bcrypt-as-promised')
 const jwt = require('jsonwebtoken')
 
