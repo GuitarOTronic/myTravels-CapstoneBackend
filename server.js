@@ -10,13 +10,14 @@ var cloudinary = require('cloudinary');
 
 const userRouter = require('./routes/users-router.js')
 const tripsRouter = require('./routes/trips-router.js')
+const picsRouter = require('./routes/pics-router.js')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 app.use('/users', userRouter)
 app.use('/trips', tripsRouter)
-
+app.use('/pics', picsRouter)
 
 app.use((req, res) => {
   const status = 404;

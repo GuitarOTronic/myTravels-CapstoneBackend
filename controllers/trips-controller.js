@@ -4,15 +4,20 @@ class TripsController{
 
   static createTrip(req, res, next){
     Model.createTrip(req.body).then(response => {
-      console.log(response);
       res.status(201).json({response})
     })
   }
 
-  static getTrips(req, res, next) {
+  static deleteTrip(req, res, next) {
+    const id = req.params.id
+    Model.deleteTrip(id).then(response => {
+      res.status(200).json({response})
+    })
+  }
+
+  static getTripsByUserId(req, res, next) {
     let id = req.params.id
-    console.log('id getTrips ', id);
-    Model.getTrips(id).then(response => {
+    Model.getTripsByUserId(id).then(response => {
       res.status(200).json({response})
     })
   }

@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.integer('user_id').notNullable()
     table.foreign('user_id').references('users.id').onDelete('CASCADE')
     table.string('title', 80).notNullable().defaultTo('')
-    table.boolean('currentTravler').defaultTo(false)
+    table.boolean('currentTraveler').defaultTo(false)
     table.string('country', 100).defaultTo('')
     table.string('region', 100).defaultTo('')
     table.timestamps(true, true)
