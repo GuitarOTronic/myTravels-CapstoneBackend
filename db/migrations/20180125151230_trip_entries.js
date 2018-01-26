@@ -9,10 +9,10 @@ exports.up = function(knex, Promise) {
     table.integer('trip_id').notNullable()
     table.foreign('trip_id').references('trips.id').onDelete('CASCADE')
 
-    table.string('public_id').notNullable()
-    table.string('url').notNullable().defaultTo('')
+    table.string('title').notNullable()
 
-    table.string('memory')
+
+    table.text('memory')
 
     table.timestamps(true, true)
   })
