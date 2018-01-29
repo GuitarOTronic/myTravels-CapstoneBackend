@@ -15,6 +15,14 @@ class TripEntriesModel{
       .returning('*')
   }
 
+
+    static updateTripEntry(title, date, memory, trip_entry_id){
+      return db('trip_entries')
+      .update({title, date, memory})
+      .where({id:trip_entry_id})
+      .returning('*')
+    }
+
 }
 
 module.exports = TripEntriesModel

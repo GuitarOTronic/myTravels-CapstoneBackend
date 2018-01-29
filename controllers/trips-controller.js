@@ -4,7 +4,11 @@ class TripsController{
 
   static createTrip(req, res, next){
     Model.createTrip(req.body).then(response => {
-      res.status(201).json({response})
+      req.body.tripId = response[0].id
+      req.body.userId = req.body.user_id
+      console.log('Creating this trip: =>>>tripId=',response[0].id);
+      next()
+      // res.status(201).json({response})
     })
   }
 

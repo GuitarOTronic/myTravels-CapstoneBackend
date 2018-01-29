@@ -5,7 +5,7 @@ class TripEntriesController{
 
   static createTripEntry(req, res, next) {
     let body = req.body
-    console.log(body);
+    console.log('createTripEntry', body);
     Model.createTripEntry(body).then(response => {
       let tripEntryId=response[0].id
       res.status(200).json({tripEntryId})
@@ -20,7 +20,23 @@ class TripEntriesController{
       // let picArray = req.body.picArray
       req.body.tripEntries=response
       next()
-      // res.status(200).json({memory, picArray, response})
+    })
+  }
+
+  static seedTrip(req, res, next){
+    console.log('seed ma body',req.body.user_id, req.body.tripId);
+    let user_id=req.body.user_id
+    let trip_id=req.body.tripId
+    let body = {user_id, trip_id}
+    Model.createTripEntry(body).then(response => {
+      res.status(200).json(response)
+    })
+  }
+
+  static updateTripEntry(req, res, next){
+    let  { title, date, memory, trip_entry_id } = req.body
+    Model.updateTripEntry(title, date, memory, trip_entry_id).then(response => {
+      res.status(200).json({response})
     })
   }
 }

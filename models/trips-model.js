@@ -1,5 +1,5 @@
 const db = require('../db/connections.js')
-console.log('trips model');
+
 class TripsModel{
 
   static createTrip(trip){
@@ -20,6 +20,7 @@ class TripsModel{
     .where({user_id})
     .returning('*')
   }
+
 }
 
 
