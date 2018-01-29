@@ -9,6 +9,12 @@ class TripEntriesModel{
 
   }
 
+  static createTripEntry(body){
+    return db('trip_entries')
+      .insert(body)
+      .returning('*')
+  }
+
 }
 
 module.exports = TripEntriesModel

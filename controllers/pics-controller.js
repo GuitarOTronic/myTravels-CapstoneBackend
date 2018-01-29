@@ -4,6 +4,7 @@ class PicsController{
 
   static addPhoto(req, res, next){
     let pic = req.body
+    console.log('addphoto BE', pic);
     Model.addPhoto(pic).then(response => {
       console.log(response);
       res.status(201).json({response})
