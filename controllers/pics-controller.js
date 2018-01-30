@@ -2,12 +2,29 @@ const Model = require('../models/pics-model.js')
 
 class PicsController{
 
-  static addPhoto(req, res, next){
+  static addPhoto(req, res, next) {
     let pic = req.body
     console.log('addphoto BE', pic);
     Model.addPhoto(pic).then(response => {
       console.log(response);
       res.status(201).json({response})
+    })
+  }
+
+  static getAllPhotos(req, res, next) {
+    Model.getAllPhotos().then(response => {
+      console.log('getAllPhotos',response);
+      let pix= {}
+      // pix[response.trip_id] = response.public_id
+      console.log(pix);
+      let picArr = response.map((pic) => {
+        console.log('picky',pic.trip_entry_id);
+        pix[pic.trip_entry_id]=pic.public_id
+        return pic.public_id
+      })
+      let homePix = {pix, picArr}
+      // console.log(picArr);
+      res.status(200).json(picArr)
     })
   }
 
@@ -25,7 +42,7 @@ class PicsController{
     })
   }
 
-  static getTripEntryPhotos (req, res, next){
+  static getTripEntryPhotos(req, res, next) {
     let tripEntries = req.body.tripEntries
     let photosObj = {}
 
