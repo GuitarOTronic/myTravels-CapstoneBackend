@@ -42,6 +42,13 @@ class PicsController{
     })
   }
 
+  static getPicsForTripEntryCarousel(req, res, next) {
+    let id = req.params.id
+    Model.getTripEntryPhotos(id).then(response => {
+      console.log(response);
+      res.status(200).json({response})
+    })
+  }
   static getTripEntryPhotos(req, res, next) {
     let tripEntries = req.body.tripEntries
     let photosObj = {}
