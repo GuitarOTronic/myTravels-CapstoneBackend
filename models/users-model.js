@@ -24,6 +24,14 @@ class UsersModel {
     return db('users')
   }
 
+  static getUserByUserId(id){
+    return db('users')
+      .where({id})
+      .select('name')
+      .first()
+
+  }
+
   static getOneUserByEmail(email){
     return db('users')
       .where({email})

@@ -45,6 +45,27 @@ class UserController {
     })
   }
 
+  static getEntryUserName(req, res, next){
+    let tripEntries=res.tripEntries
+    let promises=[]
+    let order=[]
+    for (let i in tripEntries) {
+      promises.push( Model.getUserByUserId(tripEntries[i].user_id) )
+      order.push(i)
+    }
+    Promise.all(promises).then(response => {
+      for ( let i in response ) {
+        tripEntries[order[i]].name=response[i].name
+      }
+    }).then(()=> {
+      res.tripEntries=tripEntries
+      next()
+      // res.status(200).json({tripEntries})
+
+    })
+
+  }
+
   static logout(req, res, next){
     const id = req.body.id
     Model.logout(id).then(response => {

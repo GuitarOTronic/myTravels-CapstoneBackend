@@ -13,6 +13,26 @@ class TripEntriesController{
     })
   }
 
+  static getAllTripEntries(req, res, next) {
+    Model.getAllTripEntries().then(response => {
+      let tripEntries={}
+      res.tripEntries=tripEntries
+      for (let i in response){
+
+        tripEntries[response[i].id]={
+          trip_entry_id:response[i].id,
+          trip_id:response[i].trip_id,
+          user_id:response[i].user_id,
+          title:response[i].title,
+          date:response[i].date,
+          memory:response[i].memory
+        }
+      }
+      next()
+      // res.status(200).json({response})
+    })
+  }
+
   static getTripEntries(req, res, next) {
     const tripId = req.params.id
     Model.getTripEntries(tripId).then(response => {

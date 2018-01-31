@@ -14,6 +14,13 @@ class PicsModel {
       .returning('*')
   }
 
+  static getFellowEntryPhotos(trip_entry_id) {
+    return db('pics')
+      .where({trip_entry_id})
+      .select('public_id')
+      .returning('*')
+  }
+
   static getTripPhotos(id){
     return db('pics')
       .where({trip_entry_id:id})
