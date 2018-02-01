@@ -18,7 +18,7 @@ class TripsModel{
   static getEntryCountry(id){
     return db('trips')
     .where({id})
-    .select('country')
+    .select('country', 'region')
     .first()
   }
 

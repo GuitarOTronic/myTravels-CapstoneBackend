@@ -30,6 +30,7 @@ class TripsController{
     Promise.all(promises).then(response => {
       for ( let i in response){
         tripEntries[order[i]].country=response[i].country
+        tripEntries[order[i]].region=response[i].region
 
       }
     }).then(()=>{
