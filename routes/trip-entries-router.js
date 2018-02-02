@@ -13,4 +13,10 @@ router.get('/',
   UserController.getEntryUserName,
   PicsController.getFellowEntryPhotos
   )
+router.get('/filter/:country',
+  Controller.getTripsByCountry,
+  Controller.getTripEntriesByTripId
+)
+
+
 module.exports = router

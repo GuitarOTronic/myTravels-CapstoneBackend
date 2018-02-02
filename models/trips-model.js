@@ -22,6 +22,12 @@ class TripsModel{
     .first()
   }
 
+  static getTripsByCountry(country) {
+    return db('trips')
+      .where({country})
+      .returning('*')
+  }
+
   static getTripsByUserId(user_id){
     return db('trips')
     .where({user_id})

@@ -1,6 +1,6 @@
 const Model = require('../models/trip-entries-model.js')
 const PicsModel = require('../models/pics-model.js')
-
+const TripsModel = require('../models/trips-model.js')
 class TripEntriesController{
 
   static createTripEntry(req, res, next) {
@@ -43,8 +43,27 @@ class TripEntriesController{
     })
   }
 
+  static getTripsByCountry(req, res, next) {
+    let country = req.params.country
+    TripsModel.getTripsByCountry(country).then(trips => {
+      req.body.trips=trips
+      next()
+      // write route to get trip entries by their trip id
+      res.status(200)
+    })
+  }
+
+  static getTripEntriesByTripId(req, res, next) {
+      let trips = req.body.trips
+      console.log('trips', trips);
+      let promises =[]
+      trips.map((trip)=> promises.push(Model.getTripEntries(trip.id)))
+
+      console.log('adfadf',trip.id);
+      res.status(200)
+  }
+
   static seedTrip(req, res, next){
-    console.log('seed ma body',req.body.user_id, req.body.tripId);
     let user_id=req.body.user_id
     let trip_id=req.body.tripId
     let body = {user_id, trip_id}
