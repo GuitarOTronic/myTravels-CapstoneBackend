@@ -18,5 +18,7 @@ router.get('/filter/:country',
   Controller.getTripEntriesByTripId
 )
 
+router.delete('/:tripEntryId', Controller.deleteTripEntry)
+
 
 module.exports = router

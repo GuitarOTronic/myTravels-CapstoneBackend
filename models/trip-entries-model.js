@@ -8,6 +8,13 @@ class TripEntriesModel{
       .returning('*')
   }
 
+  static deleteTripEntry(id){
+    return db('trip_entries')
+      .del()
+      .where({id})
+      .returning('*')
+  }
+
   static getTripEntries(id) {
     return db('trip_entries')
       .where({trip_id:id})

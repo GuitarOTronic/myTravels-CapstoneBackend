@@ -13,6 +13,13 @@ class TripEntriesController{
     })
   }
 
+  static deleteTripEntry(req, res, next) {
+    let tripEntryId=req.params.tripEntryId
+    Model.deleteTripEntry(tripEntryId).then(response =>{
+      res.status(200).json({response})
+    })
+  }
+
   static getAllTripEntries(req, res, next) {
     Model.getAllTripEntries().then(response => {
       let tripEntries={}
