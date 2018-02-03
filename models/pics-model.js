@@ -14,6 +14,13 @@ class PicsModel {
       .returning('*')
   }
 
+  static deleteEntryPhotos(trip_entry_id){
+    return db('pics')
+      .del()
+      .where({trip_entry_id})
+      .returning('*')
+  }
+
   static getFellowEntryPhotos(trip_entry_id) {
     return db('pics')
       .where({trip_entry_id})
