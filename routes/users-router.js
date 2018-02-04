@@ -1,6 +1,6 @@
 const router =  require ('express').Router()
 const Controller = require('../controllers/users-controller.js')
-console.log('user router');
+
 
 router.get('/', Controller.getAllUsers)
 router.post('/pastuser', Controller.verifyToken, Controller.resToken )

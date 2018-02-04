@@ -1,15 +1,12 @@
 const Model = require('../models/trips-model.js')
 const PicsModel = require('../models/pics-model.js')
-console.log('trips controler');
 class TripsController{
 
   static createTrip(req, res, next){
     Model.createTrip(req.body).then(response => {
       req.body.tripId = response[0].id
       req.body.userId = req.body.user_id
-      console.log('Creating this trip: =>>>tripId=',response[0].id);
       next()
-      // res.status(201).json({response})
     })
   }
 
@@ -67,7 +64,6 @@ class TripsController{
       })
 
     }).then(()=>{
-      console.log('the dongest', trips);
       res.status(200).json({trips})
     }).catch(err => {
       console.log(err);

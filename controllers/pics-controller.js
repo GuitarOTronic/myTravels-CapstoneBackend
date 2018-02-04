@@ -10,10 +10,10 @@ class PicsController{
   }
 
   static getAllPhotos(req, res, next) {
+
     Model.getAllPhotos().then(response => {
       let pix= {}
       // pix[response.trip_id] = response.public_id
-      console.log(pix);
       let picArr = response.map((pic) => {
         pix[pic.trip_entry_id]=pic.public_id
         return pic.public_id
@@ -83,10 +83,16 @@ class PicsController{
 
   }
 
+  static getTripPhotos(req, res, next) {
+    let tripId=req.params.id
+    Model.getAllTripPhotos(tripId).then(response => {
+      res.status(200).json({response})
+    })
+  }
 
-
-  static getAllTripPhotos(req, res, next, id) {
+  static getAllTripPhotos(req, res, next) {
     // console.log('ufcker',  req.body.id);
+    console.log('boobs');
     let tripId = req.body.id
     Model.getAllTripPhotos(tripId).then(response => {
       let ids= response.map(id => {

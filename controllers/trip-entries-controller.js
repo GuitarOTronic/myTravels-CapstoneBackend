@@ -5,11 +5,9 @@ class TripEntriesController{
 
   static createTripEntry(req, res, next) {
     let body = req.body
-    console.log('createTripEntry', body);
     Model.createTripEntry(body).then(response => {
       let tripEntryId=response[0].id
       res.status(200).json({tripEntryId})
-      // console.log('createTripEntry response=> ', tripId);
     })
   }
 
@@ -23,7 +21,6 @@ class TripEntriesController{
   }
 
   static deleteEntryPhotos(req, res, next) {
-    console.log(req.tripEntryId);
     PicsModel.deleteEntryPhotos(req.tripEntryId).then(response => {
       res.status(200).json({response})
     })
@@ -72,11 +69,8 @@ class TripEntriesController{
 
   static getTripEntriesByTripId(req, res, next) {
       let trips = req.body.trips
-      console.log('trips', trips);
       let promises =[]
       trips.map((trip)=> promises.push(Model.getTripEntries(trip.id)))
-
-      console.log('adfadf',trip.id);
       res.status(200)
   }
 

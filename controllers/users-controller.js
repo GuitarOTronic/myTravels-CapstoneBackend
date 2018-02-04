@@ -1,7 +1,6 @@
 const Model = require('../models/users-model.js')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt-as-promised')
-console.log('in controller');
 
 class UserController {
 
