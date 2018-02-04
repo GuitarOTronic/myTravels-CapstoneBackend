@@ -26,14 +26,12 @@ class PicsController{
 
   static getTripPhotos(req, res, next) {
     const id = req.params.id
-    console.log('>>>>>', id);
     Model.getTripPhotos(id).then(response => {
       let picArray = response.map(pic => {
         return pic.public_id
       })
       req.body.picArray={[id]:picArray}
       next()
-      // res.status(200).json({picArray})
     })
   }
 
@@ -85,8 +83,11 @@ class PicsController{
 
   }
 
-  static getAllTripPhotos(req, res, next) {
-    let tripId = req.params.id
+
+
+  static getAllTripPhotos(req, res, next, id) {
+    // console.log('ufcker',  req.body.id);
+    let tripId = req.body.id
     Model.getAllTripPhotos(tripId).then(response => {
       let ids= response.map(id => {
         return id.public_id
@@ -94,7 +95,7 @@ class PicsController{
       res.status(200).json({ids})
     })
 
-  } 
+  }
 
 }
 

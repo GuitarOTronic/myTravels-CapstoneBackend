@@ -1,4 +1,5 @@
 const Model = require('../models/trips-model.js')
+const PicsModel = require('../models/pics-model.js')
 console.log('trips controler');
 class TripsController{
 
@@ -39,10 +40,45 @@ class TripsController{
     })
   }
 
+  static getTripPics(req, res, next) {
+    let trips = []
+    let promises =[]
+
+    req.trips.forEach((trip)=>{
+        trip.public_id=[]
+        trips.push(trip)
+    })
+
+    trips.forEach((trip) => {
+      promises.push(PicsModel.getAllTripPhotos(trip.id))
+    })
+
+    Promise.all(promises).then(public_ids => {
+      let counter=0
+
+      public_ids.forEach((idArr) =>{
+
+        if(idArr.length && idArr[0].public_id  ){
+          // console.log(trips[counter]);
+          // console.log('dongers', idArr[0].public_id);
+          trips[counter].public_id.push(idArr[0].public_id)
+        }
+        counter++
+      })
+
+    }).then(()=>{
+      console.log('the dongest', trips);
+      res.status(200).json({trips})
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
   static getTripsByUserId(req, res, next) {
     let id = req.params.id
     Model.getTripsByUserId(id).then(response => {
-      res.status(200).json({response})
+      req.trips=response
+      next()
     })
   }
 
