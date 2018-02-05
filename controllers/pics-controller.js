@@ -1,5 +1,5 @@
 const Model = require('../models/pics-model.js')
-
+const _ = require('lodash')
 class PicsController{
 
   static addPhoto(req, res, next) {
@@ -18,9 +18,9 @@ class PicsController{
         pix[pic.trip_entry_id]=pic.public_id
         return pic.public_id
       })
-      let homePix = {pix, picArr}
-      // console.log(picArr);
-      res.status(200).json(picArr)
+      let uniArr = _.uniq(picArr)
+      console.log('>>>>>>>>>>>>>>>>>>>>',uniArr.length, picArr.length);
+      res.status(200).json(uniArr)
     })
   }
 
@@ -30,6 +30,8 @@ class PicsController{
       let picArray = response.map(pic => {
         return pic.public_id
       })
+      let uniArr=_.uniq(picArr)
+
       req.body.picArray={[id]:picArray}
       next()
     })
@@ -52,6 +54,8 @@ class PicsController{
       tripEntries[i].public_id=[]
     }
     Promise.all(promises).then(result => {
+
+      // let result = _.uniq(dupResult)
       for (let i in result) {
         if(result[i].length > 0){
           result[i].forEach(picId => {
@@ -60,6 +64,14 @@ class PicsController{
         }else tripEntries[order[i]].public_id=result[i]
       }
     }).then(() => {
+      for(let i in tripEntries){
+        // console.log(tripEntries[i].public_id)
+        let uniIds = _.uniq(tripEntries[i].public_id)
+        console.log(uniIds);
+        tripEntries[i].public_id=uniIds
+      }
+
+
       res.status(200).json({tripEntries})
     })
   }
@@ -78,6 +90,10 @@ class PicsController{
         acc[id] ? acc[id].push(photo.public_id) : acc[id] = [photo.public_id]
         return acc
       }, {})
+        for (let i in ids){
+          let uniIds = _.uniq(ids[i])
+          ids[i]=uniIds
+        }
         res.status(200).json({tripEntries, ids})
     })
 
@@ -86,13 +102,16 @@ class PicsController{
   static getTripPhotos(req, res, next) {
     let tripId=req.params.id
     Model.getAllTripPhotos(tripId).then(response => {
-      res.status(200).json({response})
+      let idArr=[]
+      response.forEach(id => {
+        idArr.push(id.public_id)
+      })
+      let uniArr = _.uniq(idArr)
+      res.status(200).json(uniArr)
     })
   }
 
   static getAllTripPhotos(req, res, next) {
-    // console.log('ufcker',  req.body.id);
-    console.log('boobs');
     let tripId = req.body.id
     Model.getAllTripPhotos(tripId).then(response => {
       let ids= response.map(id => {
