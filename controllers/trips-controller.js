@@ -11,6 +11,7 @@ class TripsController{
   }
 
   static deleteTrip(req, res, next) {
+
     const id = req.params.id
     Model.deleteTrip(id).then(response => {
       res.status(200).json({response})
